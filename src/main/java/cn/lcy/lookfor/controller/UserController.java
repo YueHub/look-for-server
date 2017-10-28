@@ -1,10 +1,10 @@
 package cn.lcy.lookfor.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -28,21 +28,10 @@ public class UserController {
 	 */
 	@RequestMapping(value = "/user", method = RequestMethod.POST)
 	@ResponseBody
-	public boolean addUser(@RequestBody User user) {
-		return false;
+	public User addUser(@RequestBody User user) {
+		return this.userService.addUser(user);
 	}
-	
-	/**
-	 * 根据用户 id 删除用户
-	 * @param id
-	 * @return
-	 */
-	@RequestMapping(value = "/user", method = RequestMethod.DELETE)
-	@ResponseBody
-	public boolean removeUser(@RequestParam(value = "id", required = true) String id) {
-		return false;
-	}
-	
+
 	/**
 	 * 根据用户 id 更新用户信息
 	 * @param id
@@ -50,29 +39,21 @@ public class UserController {
 	 */
 	@RequestMapping(value = "/user", method = RequestMethod.PUT)
 	@ResponseBody
-	public boolean updateUser(@RequestParam(value = "id", required = true) String id) {
-		return false;
+	public User updateUser(@RequestBody User user) {
+		return this.userService.updateUser(user);
 	}
 	
-	/**
-	 * 获取用户列表
-	 * @return
-	 */
-	@RequestMapping(value = "/user", method = RequestMethod.GET)
-	@ResponseBody
-	public Iterable<User> getUsers() {
-		return userService.getUsers();
-	}
 	/**
 	 * 根据用户 id 获取用户信息
 	 * @param id
 	 * @return
 	 */
+	@RequestMapping(value = "/user/{identifyId}", method = RequestMethod.GET)
 	@ResponseBody
-	public User getUser(@RequestParam(value = "id", required = true) String id) {
-		return null;
+	public User getUser(@PathVariable("identifyId") String identifyId) {
+		if (identifyId == null || identifyId.equals("")) {
+			return null;
+		}
+		return this.userService.getUserById(identifyId);
 	}
-	
-
-	
 }

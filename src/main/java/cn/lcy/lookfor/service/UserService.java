@@ -1,5 +1,7 @@
 package cn.lcy.lookfor.service;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,12 +14,17 @@ public class UserService {
 	@Autowired
 	private UserRepository userRepository;
 	
-	/**
-	 * 获取所有的用户列表
-	 * @return
-	 */
-	public Iterable<User> getUsers() {
-		return userRepository.findAll();
+	@Transactional
+	public User addUser(User user) {
+		return this.userRepository.save(user);
+	}
+	
+	@Transactional
+	public User updateUser(User user) {
+		return this.userRepository.save(user);
 	}
 
+	public User getUserById(String identifyId) {
+		return this.userRepository.findOne(identifyId);
+	}
 }
