@@ -34,8 +34,8 @@ public class PostRelease implements java.io.Serializable {
 	private Long successCount;
 	private String paidMoney;
 	private Integer status;
-	private Set postViews = new HashSet(0);
-	private Set postUncovers = new HashSet(0);
+	private Set<PostView> postViews = new HashSet<PostView>(0);
+	private Set<PostUncover> postUncovers = new HashSet<PostUncover>(0);
 
 	public PostRelease() {
 	}
@@ -50,7 +50,7 @@ public class PostRelease implements java.io.Serializable {
 
 	public PostRelease(String identifyId, User user, Date releaseTime, String title, String content, String description,
 			String reward, Long viewCount, Long uncoverCount, Long successCount, String paidMoney, Integer status,
-			Set postViews, Set postUncovers) {
+			Set<PostView> postViews, Set<PostUncover> postUncovers) {
 		this.identifyId = identifyId;
 		this.user = user;
 		this.releaseTime = releaseTime;
@@ -180,20 +180,20 @@ public class PostRelease implements java.io.Serializable {
 	}
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "postRelease")
-	public Set getPostViews() {
+	public Set<PostView> getPostViews() {
 		return this.postViews;
 	}
 
-	public void setPostViews(Set postViews) {
+	public void setPostViews(Set<PostView> postViews) {
 		this.postViews = postViews;
 	}
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "postRelease")
-	public Set getPostUncovers() {
+	public Set<PostUncover> getPostUncovers() {
 		return this.postUncovers;
 	}
 
-	public void setPostUncovers(Set postUncovers) {
+	public void setPostUncovers(Set<PostUncover> postUncovers) {
 		this.postUncovers = postUncovers;
 	}
 

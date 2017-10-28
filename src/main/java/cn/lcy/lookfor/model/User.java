@@ -25,9 +25,9 @@ public class User implements java.io.Serializable {
 	private String popularityValue;
 	private String creditValue;
 	private Date creditTime;
-	private Set postViews = new HashSet(0);
-	private Set postUncovers = new HashSet(0);
-	private Set postReleases = new HashSet(0);
+	private Set<PostView> postViews = new HashSet<PostView>(0);
+	private Set<PostUncover> postUncovers = new HashSet<PostUncover>(0);
+	private Set<PostRelease> postReleases = new HashSet<PostRelease>(0);
 
 	public User() {
 	}
@@ -38,7 +38,7 @@ public class User implements java.io.Serializable {
 	}
 
 	public User(String identifyId, String selfIntroduction, String popularityValue, String creditValue, Date creditTime,
-			Set postViews, Set postUncovers, Set postReleases) {
+			Set<PostView> postViews, Set<PostUncover> postUncovers, Set<PostRelease> postReleases) {
 		this.identifyId = identifyId;
 		this.selfIntroduction = selfIntroduction;
 		this.popularityValue = popularityValue;
@@ -98,29 +98,29 @@ public class User implements java.io.Serializable {
 	}
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
-	public Set getPostViews() {
+	public Set<PostView> getPostViews() {
 		return this.postViews;
 	}
 
-	public void setPostViews(Set postViews) {
+	public void setPostViews(Set<PostView> postViews) {
 		this.postViews = postViews;
 	}
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
-	public Set getPostUncovers() {
+	public Set<PostUncover> getPostUncovers() {
 		return this.postUncovers;
 	}
 
-	public void setPostUncovers(Set postUncovers) {
+	public void setPostUncovers(Set<PostUncover> postUncovers) {
 		this.postUncovers = postUncovers;
 	}
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
-	public Set getPostReleases() {
+	public Set<PostRelease> getPostReleases() {
 		return this.postReleases;
 	}
 
-	public void setPostReleases(Set postReleases) {
+	public void setPostReleases(Set<PostRelease> postReleases) {
 		this.postReleases = postReleases;
 	}
 
