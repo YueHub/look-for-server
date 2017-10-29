@@ -17,13 +17,9 @@ import cn.lcy.lookfor.service.PostReleaseService;
 @RestController
 public class PostReleaseController {
 	
-	private PostReleaseService postReleaseService;
-	
 	@Autowired
-	public PostReleaseController(PostReleaseService postReleaseService) {
-		this.postReleaseService = postReleaseService;
-	}
-	
+	private PostReleaseService postReleaseService;
+
 	
 	/**
 	 * 添加

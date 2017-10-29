@@ -1,9 +1,9 @@
 package cn.lcy.lookfor.service;
 
-import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import cn.lcy.lookfor.dao.UserRepository;
 import cn.lcy.lookfor.model.User;
@@ -27,4 +27,5 @@ public class UserService {
 	public User getUserById(String identifyId) {
 		return this.userRepository.findOne(identifyId);
 	}
+	
 }

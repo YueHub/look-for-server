@@ -21,11 +21,27 @@ public class UserNode {
 	
 	public UserNode() {}
 	
-	public UserNode(String userIdentifyId) {
+	public UserNode(String postIdentifyId, String userIdentifyId) {
+		this.postIdentifyId = postIdentifyId;
 		this.userIdentifyId = userIdentifyId;
 	}
 	
 	@Relationship(type = "forward", direction=Relationship.OUTGOING)
-	private List<ForwardRelationship> forwards;
-	
+	private List<PostForward> forwards;
+
+	public String getPostIdentifyId() {
+		return postIdentifyId;
+	}
+
+	public void setPostIdentifyId(String postIdentifyId) {
+		this.postIdentifyId = postIdentifyId;
+	}
+
+	public String getUserIdentifyId() {
+		return userIdentifyId;
+	}
+
+	public void setUserIdentifyId(String userIdentifyId) {
+		this.userIdentifyId = userIdentifyId;
+	}
 }

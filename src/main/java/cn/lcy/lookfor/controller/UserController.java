@@ -14,12 +14,8 @@ import cn.lcy.lookfor.service.UserService;
 @RestController
 public class UserController {
 	
-	private UserService userService;
-	
 	@Autowired
-	public UserController(UserService userService) {
-		this.userService = userService;
-	}
+	private UserService userService;
 
 	/**
 	 * 添加用户

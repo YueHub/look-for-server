@@ -15,13 +15,9 @@ import cn.lcy.lookfor.service.PostUncoverService;
 @RestController
 public class PostUncoverController {
 
-	
+	@Autowired
 	private PostUncoverService postUncoverService;
 	
-	@Autowired
-	public PostUncoverController(PostUncoverService postUncoverService) {
-		this.postUncoverService = postUncoverService;
-	}
 	
 	@RequestMapping(value = "/postuncover", method = RequestMethod.POST)
 	@ResponseBody

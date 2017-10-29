@@ -16,12 +16,9 @@ import cn.lcy.lookfor.service.PostViewService;
 @RestController
 public class PostViewController {
 	
+	@Autowired
 	private PostViewService postViewService;
 	
-	@Autowired
-	public PostViewController(PostViewService postViewService) {
-		this.postViewService = postViewService;
-	}
 	
 	@RequestMapping(value = "/postview", method = RequestMethod.POST)
 	@ResponseBody

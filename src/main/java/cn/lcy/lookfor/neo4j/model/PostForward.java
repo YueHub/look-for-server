@@ -6,7 +6,7 @@ import org.neo4j.ogm.annotation.RelationshipEntity;
 import org.neo4j.ogm.annotation.StartNode;
 
 @RelationshipEntity(type = "forward")
-public class ForwardRelationship {
+public class PostForward {
 
 	@GraphId
 	private Long id;
@@ -17,7 +17,7 @@ public class ForwardRelationship {
 	@EndNode
 	private UserNode endUser;
 	
-	public ForwardRelationship(UserNode startUser, UserNode endUser) {
+	public PostForward(UserNode startUser, UserNode endUser) {
 		this.startUser = startUser;
 		this.endUser = endUser;
 	}
