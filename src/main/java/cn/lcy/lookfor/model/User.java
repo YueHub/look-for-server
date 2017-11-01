@@ -1,5 +1,5 @@
 package cn.lcy.lookfor.model;
-// Generated 2017-10-28 21:22:06 by Hibernate Tools 5.0.6.Final
+// Generated 2017-11-1 14:46:43 by Hibernate Tools 5.0.6.Final
 
 import java.util.Date;
 import java.util.HashSet;
@@ -20,6 +20,7 @@ import javax.persistence.TemporalType;
 @Table(name = "user", catalog = "lookfor")
 public class User implements java.io.Serializable {
 
+	@Id
 	private String identifyId;
 	private String selfIntroduction;
 	private String popularityValue;
@@ -30,6 +31,10 @@ public class User implements java.io.Serializable {
 	private Set<PostRelease> postReleases = new HashSet<PostRelease>(0);
 
 	public User() {
+	}
+	
+	public User(String identifyId) {
+		this.identifyId = identifyId;
 	}
 
 	public User(String identifyId, Date creditTime) {

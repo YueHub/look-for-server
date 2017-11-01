@@ -17,6 +17,9 @@ public class PostReleaseService {
 	
 	@Transactional
 	public PostRelease addPostRelease(PostRelease postRelease) {
+		// 添加 identifyId、releaseTime
+		
+		postRelease.setIdentifyId("12332425");
 		return this.postReleaseRepository.save(postRelease);
 	}
 	

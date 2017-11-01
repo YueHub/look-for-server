@@ -1,9 +1,10 @@
 package cn.lcy.lookfor.model;
-// Generated 2017-10-28 21:22:06 by Hibernate Tools 5.0.6.Final
+// Generated 2017-11-1 14:46:43 by Hibernate Tools 5.0.6.Final
 
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -22,6 +23,7 @@ import javax.persistence.TemporalType;
 @Table(name = "post_release", catalog = "lookfor")
 public class PostRelease implements java.io.Serializable {
 
+	@Id
 	private String identifyId;
 	private User user;
 	private Date releaseTime;
@@ -29,6 +31,10 @@ public class PostRelease implements java.io.Serializable {
 	private String content;
 	private String description;
 	private String reward;
+	private String phone;
+	private String email;
+	private String selfIntroduce;
+	private String postImg;
 	private Long viewCount;
 	private Long uncoverCount;
 	private Long successCount;
@@ -40,17 +46,19 @@ public class PostRelease implements java.io.Serializable {
 	public PostRelease() {
 	}
 
-	public PostRelease(String identifyId, User user, Date releaseTime, String title, String reward) {
+	public PostRelease(String identifyId, User user, Date releaseTime, String title, String reward, String phone) {
 		this.identifyId = identifyId;
 		this.user = user;
 		this.releaseTime = releaseTime;
 		this.title = title;
 		this.reward = reward;
+		this.phone = phone;
 	}
 
 	public PostRelease(String identifyId, User user, Date releaseTime, String title, String content, String description,
-			String reward, Long viewCount, Long uncoverCount, Long successCount, String paidMoney, Integer status,
-			Set<PostView> postViews, Set<PostUncover> postUncovers) {
+			String reward, String phone, String email, String selfIntroduce, String postImg, Long viewCount,
+			Long uncoverCount, Long successCount, String paidMoney, Integer status, Set<PostView> postViews,
+			Set<PostUncover> postUncovers) {
 		this.identifyId = identifyId;
 		this.user = user;
 		this.releaseTime = releaseTime;
@@ -58,6 +66,10 @@ public class PostRelease implements java.io.Serializable {
 		this.content = content;
 		this.description = description;
 		this.reward = reward;
+		this.phone = phone;
+		this.email = email;
+		this.selfIntroduce = selfIntroduce;
+		this.postImg = postImg;
 		this.viewCount = viewCount;
 		this.uncoverCount = uncoverCount;
 		this.successCount = successCount;
@@ -132,6 +144,42 @@ public class PostRelease implements java.io.Serializable {
 
 	public void setReward(String reward) {
 		this.reward = reward;
+	}
+
+	@Column(name = "phone", nullable = false, length = 20)
+	public String getPhone() {
+		return this.phone;
+	}
+
+	public void setPhone(String phone) {
+		this.phone = phone;
+	}
+
+	@Column(name = "email", length = 30)
+	public String getEmail() {
+		return this.email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	@Column(name = "self_introduce", length = 200)
+	public String getSelfIntroduce() {
+		return this.selfIntroduce;
+	}
+
+	public void setSelfIntroduce(String selfIntroduce) {
+		this.selfIntroduce = selfIntroduce;
+	}
+
+	@Column(name = "post_img", length = 20)
+	public String getPostImg() {
+		return this.postImg;
+	}
+
+	public void setPostImg(String postImg) {
+		this.postImg = postImg;
 	}
 
 	@Column(name = "view_count")

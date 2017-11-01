@@ -1,16 +1,18 @@
 package cn.lcy.lookfor.controller;
 
+import java.io.IOException;
 import java.sql.Timestamp;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import cn.lcy.lookfor.dto.PostReleaseDTO2;
 import cn.lcy.lookfor.model.PostRelease;
 import cn.lcy.lookfor.service.PostReleaseService;
 
@@ -25,11 +27,24 @@ public class PostReleaseController {
 	 * 添加
 	 * @param postRelease
 	 * @return
+	 * @throws IOException 
 	 */
 	@RequestMapping(value = "/postrelease", method = RequestMethod.POST)
 	@ResponseBody
-	public PostRelease addPostRelease(@RequestBody PostRelease postRelease) {
-		return this.postReleaseService.addPostRelease(postRelease);
+	public PostRelease addPostRelease(@ModelAttribute("postRelease") PostRelease postRelease, @ModelAttribute("file") PostReleaseDTO2 postReleaseDTO2) throws IOException {
+		System.out.println("###################################\n" + postRelease.getPhone());
+		System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@\n" + postReleaseDTO2.getFile().length);
+//		byte[] bytes = null;
+//		try {
+//			bytes = postReleaseDTO.getImgs().getBytes();
+//		} catch (IOException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		};
+//        Path path = Paths.get("/upload" + postReleaseDTO.getImgs()[0].getOriginalFilename());
+//        Files.write(path, bytes);
+//		return this.postReleaseService.addPostRelease(postReleaseDTO.getPostRelease());
+		return null;
 	}
 	
 	/**
