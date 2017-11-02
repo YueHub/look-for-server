@@ -1,7 +1,10 @@
 package cn.lcy.lookfor.controller;
 
+import java.io.File;
 import java.io.IOException;
+import java.security.NoSuchAlgorithmException;
 import java.sql.Timestamp;
+import java.util.Calendar;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -12,9 +15,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import cn.lcy.lookfor.dto.PostReleaseDTO2;
+import cn.lcy.lookfor.config.Config;
 import cn.lcy.lookfor.model.PostRelease;
 import cn.lcy.lookfor.service.PostReleaseService;
+import cn.lcy.lookfor.util.Encrypt;
+import cn.lcy.lookfor.util.FileIO;
+import cn.lcy.lookfor.vo.FileUpload;
 
 @RestController
 public class PostReleaseController {
@@ -23,28 +29,47 @@ public class PostReleaseController {
 	private PostReleaseService postReleaseService;
 
 	
+	private String year = String.valueOf(Calendar.getInstance().get(Calendar.YEAR));
+	
+	private String month = String.valueOf(Calendar.getInstance().get(Calendar.MONTH));
+	
+	private String dayOfMonth = String.valueOf(Calendar.getInstance().get(Calendar.DAY_OF_MONTH));
+	
 	/**
-	 * 添加
+	 * 添加招聘帖子
 	 * @param postRelease
 	 * @return
 	 * @throws IOException 
+	 * @throws NoSuchAlgorithmException 
 	 */
 	@RequestMapping(value = "/postrelease", method = RequestMethod.POST)
 	@ResponseBody
-	public PostRelease addPostRelease(@ModelAttribute("postRelease") PostRelease postRelease, @ModelAttribute("file") PostReleaseDTO2 postReleaseDTO2) throws IOException {
-		System.out.println("###################################\n" + postRelease.getPhone());
-		System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@\n" + postReleaseDTO2.getFile().length);
-//		byte[] bytes = null;
-//		try {
-//			bytes = postReleaseDTO.getImgs().getBytes();
-//		} catch (IOException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		};
-//        Path path = Paths.get("/upload" + postReleaseDTO.getImgs()[0].getOriginalFilename());
-//        Files.write(path, bytes);
-//		return this.postReleaseService.addPostRelease(postReleaseDTO.getPostRelease());
-		return null;
+	public PostRelease addPostRelease(@ModelAttribute PostRelease postRelease, @ModelAttribute("files") FileUpload fileUpload) throws IOException, NoSuchAlgorithmException {
+		System.out.println("user: " + postRelease.getUser());
+		System.out.println("phone: " + postRelease.getPhone());
+		String saveDir = null;	// 存储的位置
+		String fileOriginalName = null;	// 原始文件名
+		String fileSuffix = null;	// 文件后缀
+		String fileHashName = null; // 哈希文件名
+		String fileName = null; // 加上后缀文件名
+		
+		String filePath = null;
+		String postImgUrls = "";
+		for (int i = 0; i < fileUpload.getFiles().length; i++) {
+			saveDir = Config.imgUrl + year + File.separator + month + File.separator + dayOfMonth + File.separator;
+			
+			fileOriginalName = fileUpload.getFiles()[i].getOriginalFilename();
+			String[] array = fileOriginalName.split("\\.");
+			fileSuffix = array[array.length-1];
+			fileHashName = Encrypt.callMD5(fileOriginalName);
+			fileName = fileHashName + "." + fileSuffix;
+			
+			filePath = saveDir + fileName;
+			FileIO.saveImg(fileUpload.getFiles()[0], saveDir, fileName);
+			String splitChar = i == fileUpload.getFiles().length - 1 ? "" : ",";
+			postImgUrls = filePath + splitChar;
+		}
+		return this.postReleaseService.addPostRelease(postRelease, postImgUrls);
 	}
 	
 	/**

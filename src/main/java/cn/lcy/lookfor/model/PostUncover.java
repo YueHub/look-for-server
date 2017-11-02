@@ -1,5 +1,5 @@
 package cn.lcy.lookfor.model;
-// Generated 2017-11-1 14:46:43 by Hibernate Tools 5.0.6.Final
+// Generated 2017-11-2 15:44:17 by Hibernate Tools 5.0.6.Final
 
 import java.util.Date;
 import javax.persistence.Column;
@@ -19,7 +19,6 @@ import javax.persistence.TemporalType;
 @Table(name = "post_uncover", catalog = "lookfor")
 public class PostUncover implements java.io.Serializable {
 
-	@Id
 	private String identifyId;
 	private PostRelease postRelease;
 	private User user;
@@ -46,7 +45,7 @@ public class PostUncover implements java.io.Serializable {
 
 	@Id
 
-	@Column(name = "identify_id", unique = true, nullable = false, length = 10)
+	@Column(name = "identify_id", unique = true, nullable = false, length = 32)
 	public String getIdentifyId() {
 		return this.identifyId;
 	}

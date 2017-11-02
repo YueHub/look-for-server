@@ -1,6 +1,8 @@
 package cn.lcy.lookfor.service;
 
 import java.sql.Timestamp;
+import java.util.Date;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,10 +18,12 @@ public class PostReleaseService {
 	private PostReleaseRepository postReleaseRepository;
 	
 	@Transactional
-	public PostRelease addPostRelease(PostRelease postRelease) {
-		// 添加 identifyId、releaseTime
-		
-		postRelease.setIdentifyId("12332425");
+	public PostRelease addPostRelease(PostRelease postRelease, String postImgUrls) {
+		// 添加 identifyId、releaseTime、postImg
+		String uuid = UUID.randomUUID().toString().replace("-", "");
+		postRelease.setIdentifyId(uuid);
+		postRelease.setReleaseTime(new Date(System.currentTimeMillis()));
+		postRelease.setPostImgUrls(postImgUrls);
 		return this.postReleaseRepository.save(postRelease);
 	}
 	
