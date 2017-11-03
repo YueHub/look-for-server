@@ -1,6 +1,7 @@
 package cn.lcy.lookfor.service;
 
 import java.sql.Timestamp;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,11 +22,11 @@ public class PostViewService {
 		return this.postViewRepository.save(postView);
 	}
 	
-	public Iterable<PostView> getPostViewsByUserId(User user) {
+	public List<PostView> getPostViewsByUserId(User user) {
 		return this.postViewRepository.findByUser(user);
 	}
 	
-	public Iterable<PostView> getPostViewsByUserIdAndTime(User user, Timestamp startDate, Timestamp endDate) {
+	public List<PostView> getPostViewsByUserIdAndTime(User user, Timestamp startDate, Timestamp endDate) {
 		return this.postViewRepository.findByUserAndViewTimeBetween(user, startDate, endDate);
 	}
 

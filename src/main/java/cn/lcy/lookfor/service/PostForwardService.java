@@ -45,7 +45,7 @@ public class PostForwardService {
 	 * @param endUserIdentifyId
 	 * @return
 	 */
-	public Iterable<User> getUserForwardPath(String postIdentifyId, String startUserIdentifyId, String endUserIdentifyId) {
+	public List<User> getUserForwardPath(String postIdentifyId, String startUserIdentifyId, String endUserIdentifyId) {
 		List<UserNode> userNodes = this.userNodeRepository.getUserNodes(postIdentifyId, startUserIdentifyId, endUserIdentifyId);
 		List<User> users = new ArrayList<User>();
 		User user = null;
@@ -54,7 +54,6 @@ public class PostForwardService {
 			users.add(user);
 		}
 		return users;
-		
 	}
 
 }

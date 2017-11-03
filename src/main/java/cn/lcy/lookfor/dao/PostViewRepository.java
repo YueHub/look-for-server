@@ -1,6 +1,7 @@
 package cn.lcy.lookfor.dao;
 
 import java.sql.Timestamp;
+import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
@@ -14,7 +15,7 @@ public interface PostViewRepository extends JpaRepository<PostView, String>{
 	 * @param userIdentifyId
 	 * @return
 	 */
-	public Iterable<PostView> findByUser(User user);
+	public List<PostView> findByUser(User user);
 	
 	/**
 	 * 根据用户 ID 和指定时间获取用户浏览的帖子
@@ -22,6 +23,6 @@ public interface PostViewRepository extends JpaRepository<PostView, String>{
 	 * @param endDate
 	 * @return
 	 */
-	public Iterable<PostView> findByUserAndViewTimeBetween(User user, Timestamp startDate, Timestamp endDate);
+	public List<PostView> findByUserAndViewTimeBetween(User user, Timestamp startDate, Timestamp endDate);
 	
 }

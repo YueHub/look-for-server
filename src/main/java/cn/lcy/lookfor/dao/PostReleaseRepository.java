@@ -1,6 +1,7 @@
 package cn.lcy.lookfor.dao;
 
 import java.sql.Timestamp;
+import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
@@ -12,7 +13,7 @@ public interface PostReleaseRepository extends JpaRepository<PostRelease, String
 	 * 根据指定状态获取招聘帖子
 	 * @return
 	 */
-	public Iterable<PostRelease> findByStatus(int status);
+	public List<PostRelease> findByStatus(int status);
 	
 	/**
 	 * 查找一定时间范围内的帖子
@@ -20,8 +21,6 @@ public interface PostReleaseRepository extends JpaRepository<PostRelease, String
 	 * @param endDate
 	 * @return
 	 */
-	public Iterable<PostRelease> findByReleaseTimeBetween(Timestamp startDate, Timestamp endDate);
-	
-	
+	public List<PostRelease> findByReleaseTimeBetween(Timestamp startDate, Timestamp endDate);
 	
 }

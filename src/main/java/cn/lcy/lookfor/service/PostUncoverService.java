@@ -1,6 +1,8 @@
 package cn.lcy.lookfor.service;
 
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,7 +22,7 @@ public class PostUncoverService {
 		return this.postUncoverRepository.save(postUncover);
 	}
 
-	public Iterable<PostUncover> getPostUncovers(User user) {
+	public List<PostUncover> getPostUncovers(User user) {
 		return this.postUncoverRepository.findByUser(user);
 	}
 }

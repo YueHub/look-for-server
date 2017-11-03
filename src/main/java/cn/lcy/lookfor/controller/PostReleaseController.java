@@ -4,7 +4,10 @@ import java.io.File;
 import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -15,25 +18,45 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.alibaba.fastjson.JSON;
+
 import cn.lcy.lookfor.config.Config;
+import cn.lcy.lookfor.enums.ErrorEnum;
 import cn.lcy.lookfor.model.PostRelease;
 import cn.lcy.lookfor.service.PostReleaseService;
 import cn.lcy.lookfor.util.Encrypt;
 import cn.lcy.lookfor.util.FileIO;
+import cn.lcy.lookfor.vo.ErrorMessage;
 import cn.lcy.lookfor.vo.FileUpload;
+import cn.lcy.lookfor.vo.PostVO;
+import cn.lcy.lookfor.vo.ResultVO;
 
 @RestController
 public class PostReleaseController {
 	
+	/**
+	 * 返回的结果
+	 */
+	@Autowired
+	private ResultVO resultVO;
+	
+	/**
+	 * 返回的异常和错误
+	 */
+	@Autowired
+	private ErrorMessage errorMessage;
+	
 	@Autowired
 	private PostReleaseService postReleaseService;
-
 	
+	private PostVO postVO;
+
 	private String year = String.valueOf(Calendar.getInstance().get(Calendar.YEAR));
 	
 	private String month = String.valueOf(Calendar.getInstance().get(Calendar.MONTH));
 	
 	private String dayOfMonth = String.valueOf(Calendar.getInstance().get(Calendar.DAY_OF_MONTH));
+	
 	
 	/**
 	 * 添加招聘帖子
@@ -84,6 +107,46 @@ public class PostReleaseController {
 	}
 	
 	/**
+	 * 根据状态获取帖子信息
+	 * @param status
+	 * @return
+	 */
+	@RequestMapping(value = "/postrelease", method = RequestMethod.GET)
+	@ResponseBody
+	public String getPostReleasesByStatus(@RequestParam(value="status",required = false) Integer status, 
+			@RequestParam(value="startDate",required = false) Timestamp startDate, 
+			@RequestParam(value="endDate",required = false) Timestamp endDate) {
+		resultVO.setRequestTime(new Date(System.currentTimeMillis()).toString());	// 接受请求的时间
+		
+		if (status == null || status.equals("")) {
+			errorMessage = new ErrorMessage(ErrorEnum.PARAMERROR.getCode(), ErrorEnum.PARAMERROR.getMessage());
+			resultVO.setResult(errorMessage);
+			resultVO.setResponseTime(new Date(System.currentTimeMillis()).toString());
+			return JSON.toJSONStringWithDateFormat(resultVO, "yyyy-MM-dd HH:mm:ss");
+		}
+		
+		// 获取指定状态的所有帖子
+		if (startDate == null || endDate == null || startDate.equals("") || endDate.equals("")) {
+			List<PostRelease> postReleaseList = this.postReleaseService.getPostReleasesByStatus(status);
+			List<PostVO> postList = new ArrayList<PostVO>();
+			for (PostRelease postRelease : postReleaseList) {
+				postVO = new PostVO(postRelease);
+				postList.add(postVO);
+			}
+			return JSON.toJSONStringWithDateFormat(postList, "yyyy-MM-dd HH:mm:ss");
+		}
+		
+		// 获取指定日期的帖子
+		List<PostRelease> postReleaseList = this.postReleaseService.getPostReleasesByTime(startDate, endDate);
+		List<PostVO> postList = new ArrayList<PostVO>();
+		for (PostRelease postRelease : postReleaseList) {
+			postVO = new PostVO(postRelease);
+			postList.add(postVO);
+		}
+		return JSON.toJSONStringWithDateFormat(postList, "yyyy-MM-dd HH:mm:ss");
+	}
+	
+	/**
 	 * 根据帖子 ID 获取帖子信息
 	 * @param identifyId
 	 * @return
@@ -96,24 +159,5 @@ public class PostReleaseController {
 		}
 		return this.postReleaseService.getPostReleaseById(identifyId);
 	}
-	
-	/**
-	 * 根据状态获取帖子信息
-	 * @param status
-	 * @return
-	 */
-	@RequestMapping(value = "/postrelease", method = RequestMethod.GET)
-	@ResponseBody
-	public Iterable<PostRelease> getPostReleasesByStatus(@RequestParam(value="status",required = false) Integer status, 
-			@RequestParam(value="startDate",required = false) Timestamp startDate, 
-			@RequestParam(value="endDate",required = false) Timestamp endDate) {
-		if (status == null || status.equals("")) {
-			return null;
-		}
-		if (startDate == null || endDate == null || startDate.equals("") || endDate.equals("")) {
-			return this.postReleaseService.getPostReleasesByStatus(status);
-		}
-		return this.postReleaseService.getPostReleasesByTime(startDate, endDate); 
-	}	
 	
 }

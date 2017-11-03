@@ -1,5 +1,7 @@
 package cn.lcy.lookfor.dao;
 
+import java.util.List;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import cn.lcy.lookfor.model.PostUncover;
@@ -12,5 +14,5 @@ public interface PostUncoverRepository extends JpaRepository<PostUncover, String
 	 * @param userId
 	 * @return
 	 */
-	public Iterable<PostUncover> findByUser(User user);
+	public List<PostUncover> findByUser(User user);
 }

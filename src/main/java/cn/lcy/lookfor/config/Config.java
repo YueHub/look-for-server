@@ -28,6 +28,11 @@ public class Config {
 	public static String imgUrl;
 	
 	/**
+	 * API 版本号
+	 */
+	public static String version;
+	
+	/**
 	 * 读取配置
 	 */
 	static {
@@ -37,6 +42,7 @@ public class Config {
 			e.printStackTrace();
 		}
 		imgUrl = properties.getProperty("imgUrl").toString();
+		version = properties.getProperty("version").toString();
 	}
 
 }

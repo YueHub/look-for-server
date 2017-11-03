@@ -2,6 +2,7 @@ package cn.lcy.lookfor.service;
 
 import java.sql.Timestamp;
 import java.util.Date;
+import java.util.List;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,18 +33,15 @@ public class PostReleaseService {
 		return this.postReleaseRepository.save(postRelease);
 	}
 	
-	
 	public PostRelease getPostReleaseById(String identifyId) {
 		return this.postReleaseRepository.findOne(identifyId);
 	}
 	
-	
-	public Iterable<PostRelease> getPostReleasesByStatus(int status) {
+	public List<PostRelease> getPostReleasesByStatus(int status) {
 		return this.postReleaseRepository.findByStatus(status);
 	}
-
 	
-	public Iterable<PostRelease> getPostReleasesByTime(Timestamp startDate, Timestamp endDate) {
+	public List<PostRelease> getPostReleasesByTime(Timestamp startDate, Timestamp endDate) {
 		return this.postReleaseRepository.findByReleaseTimeBetween(startDate, endDate);
 	}
 }
