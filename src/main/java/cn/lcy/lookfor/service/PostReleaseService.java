@@ -44,4 +44,9 @@ public class PostReleaseService {
 	public List<PostRelease> getPostReleasesByTime(Timestamp startDate, Timestamp endDate) {
 		return this.postReleaseRepository.findByReleaseTimeBetween(startDate, endDate);
 	}
+	
+	public List<PostRelease> getPostReleaseByStatusAndTime(int status, Timestamp startDate, Timestamp endDate) {
+		return this.postReleaseRepository.findByStatusAndReleaseTimeBetween(status, startDate, endDate);
+	}
+
 }

@@ -119,31 +119,40 @@ public class PostReleaseController {
 		resultVO.setRequestTime(new Date(System.currentTimeMillis()).toString());	// 接受请求的时间
 		
 		if (status == null || status.equals("")) {
-			errorMessage = new ErrorMessage(ErrorEnum.PARAMERROR.getCode(), ErrorEnum.PARAMERROR.getMessage());
-			resultVO.setResult(errorMessage);
-			resultVO.setResponseTime(new Date(System.currentTimeMillis()).toString());
-			return JSON.toJSONStringWithDateFormat(resultVO, "yyyy-MM-dd HH:mm:ss");
-		}
-		
-		// 获取指定状态的所有帖子
-		if (startDate == null || endDate == null || startDate.equals("") || endDate.equals("")) {
-			List<PostRelease> postReleaseList = this.postReleaseService.getPostReleasesByStatus(status);
-			List<PostVO> postList = new ArrayList<PostVO>();
-			for (PostRelease postRelease : postReleaseList) {
-				postVO = new PostVO(postRelease);
-				postList.add(postVO);
+			if (startDate == null || endDate == null || startDate.equals("") || endDate.equals("")) {  // status 且 date 为空
+				errorMessage = new ErrorMessage(ErrorEnum.PARAMERROR.getCode(), ErrorEnum.PARAMERROR.getMessage());
+				resultVO.setResult(errorMessage);
+			} else {	// status 为空 且 date 非空
+				// 获取指定日期的帖子
+				List<PostRelease> postReleaseList = this.postReleaseService.getPostReleasesByTime(startDate, endDate);
+				List<PostVO> postList = new ArrayList<PostVO>();
+				for (PostRelease postRelease : postReleaseList) {
+					postVO = new PostVO(postRelease);
+					postList.add(postVO);
+				}
+				resultVO.setResult(postList);
 			}
-			return JSON.toJSONStringWithDateFormat(postList, "yyyy-MM-dd HH:mm:ss");
+		} else {
+			if (startDate == null || endDate == null || startDate.equals("") || endDate.equals("")) {	// status 非空 且 date 为空
+				List<PostRelease> postReleaseList = this.postReleaseService.getPostReleasesByStatus(status);
+				List<PostVO> postList = new ArrayList<PostVO>();
+				for (PostRelease postRelease : postReleaseList) {
+					postVO = new PostVO(postRelease);
+					postList.add(postVO);
+				}
+				resultVO.setResult(postList);
+			} else {	// status 非空 且 date 非空
+				List<PostRelease> postReleaseList = this.postReleaseService.getPostReleaseByStatusAndTime(status, startDate, endDate);
+				List<PostVO> postList = new ArrayList<PostVO>();
+				for (PostRelease postRelease : postReleaseList) {
+					postVO = new PostVO(postRelease);
+					postList.add(postVO);
+				}
+				resultVO.setResult(postList);
+			}
 		}
-		
-		// 获取指定日期的帖子
-		List<PostRelease> postReleaseList = this.postReleaseService.getPostReleasesByTime(startDate, endDate);
-		List<PostVO> postList = new ArrayList<PostVO>();
-		for (PostRelease postRelease : postReleaseList) {
-			postVO = new PostVO(postRelease);
-			postList.add(postVO);
-		}
-		return JSON.toJSONStringWithDateFormat(postList, "yyyy-MM-dd HH:mm:ss");
+		resultVO.setResponseTime(new Date(System.currentTimeMillis()).toString());
+		return JSON.toJSONStringWithDateFormat(resultVO, "yyyy-MM-dd HH:mm:ss");
 	}
 	
 	/**
@@ -151,7 +160,7 @@ public class PostReleaseController {
 	 * @param identifyId
 	 * @return
 	 */
-	@RequestMapping(value = "/postrelease/{ identifyId }", method = RequestMethod.GET)
+	@RequestMapping(value = "/postrelease/{identifyId}", method = RequestMethod.GET)
 	@ResponseBody
 	public PostRelease getPostReleaseById(@PathVariable("identifyId") String identifyId) {
 		if (identifyId == null || identifyId.equals("")) {

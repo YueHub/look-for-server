@@ -23,4 +23,13 @@ public interface PostReleaseRepository extends JpaRepository<PostRelease, String
 	 */
 	public List<PostRelease> findByReleaseTimeBetween(Timestamp startDate, Timestamp endDate);
 	
+	/**
+	 * 查找指定状态且在一定时间范围内的帖子
+	 * @param status
+	 * @param startDate
+	 * @param endDate
+	 * @return
+	 */
+	public List<PostRelease> findByStatusAndReleaseTimeBetween(int status, Timestamp startDate, Timestamp endDate);
+	
 }
