@@ -3,26 +3,26 @@ package cn.lcy.lookfor.vo;
 import org.springframework.stereotype.Component;
 
 @Component
-public class ErrorMessage {
+public class SuccessMessage {
 	
 	/**
-	 * 错误编码
+	 * 状态编码
 	 */
-	private int errorCode;
-	
+	private int code;
+
 	/**
-	 * 错误信息 
+	 * 成功信息
 	 */
 	private String message;
 	
-	public ErrorMessage() {}
+	public SuccessMessage() {}
 
-	public int getErrorCode() {
-		return errorCode;
+	public int getCode() {
+		return code;
 	}
 
-	public void setErrorCode(int errorCode) {
-		this.errorCode = errorCode;
+	public void setCode(int code) {
+		this.code = code;
 	}
 
 	public String getMessage() {

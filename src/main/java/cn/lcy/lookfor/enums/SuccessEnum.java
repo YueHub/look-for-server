@@ -1,15 +1,14 @@
 package cn.lcy.lookfor.enums;
 
-public enum ErrorEnum {
+public enum SuccessEnum {
 	
-	PARAMERROR(400, "参数错误"),
-	DATABASEERROR(500, "关系数据库错误");
+	POSTADDSUCCESS(200, "帖子添加成功");
 	
 	private int code;
 	
 	private String message;
 	
-	private ErrorEnum(int code, String message) {
+	private SuccessEnum(int code, String message) {
 		this.code = code;
 		this.message = message;
 	}

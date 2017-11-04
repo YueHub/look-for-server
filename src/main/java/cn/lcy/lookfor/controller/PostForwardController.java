@@ -20,7 +20,7 @@ public class PostForwardController {
 	
 	@RequestMapping(value = "/postforward/forward", method = RequestMethod.POST)
 	@ResponseBody
-	public PostForward addRootUserNode(@RequestParam(value = "postId", required = true) String postId,  
+	public PostForward addPostForward(@RequestParam(value = "postId", required = true) String postId,  
             @RequestParam(value = "startUserId", required = true) String startUserId,
             @RequestParam(value = "endUserId", required = true) String endUserId) {
 		return this.postForwardService.addPostForward(postId, startUserId, endUserId);

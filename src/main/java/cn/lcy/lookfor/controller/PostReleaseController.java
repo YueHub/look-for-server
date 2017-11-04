@@ -22,14 +22,18 @@ import com.alibaba.fastjson.JSON;
 
 import cn.lcy.lookfor.config.Config;
 import cn.lcy.lookfor.enums.ErrorEnum;
+import cn.lcy.lookfor.enums.SuccessEnum;
 import cn.lcy.lookfor.model.PostRelease;
+import cn.lcy.lookfor.neo4j.model.UserNode;
 import cn.lcy.lookfor.service.PostReleaseService;
+import cn.lcy.lookfor.service.UserNodeService;
 import cn.lcy.lookfor.util.Encrypt;
 import cn.lcy.lookfor.util.FileIO;
 import cn.lcy.lookfor.vo.ErrorMessage;
 import cn.lcy.lookfor.vo.FileUpload;
 import cn.lcy.lookfor.vo.PostVO;
 import cn.lcy.lookfor.vo.ResultVO;
+import cn.lcy.lookfor.vo.SuccessMessage;
 
 @RestController
 public class PostReleaseController {
@@ -47,7 +51,13 @@ public class PostReleaseController {
 	private ErrorMessage errorMessage;
 	
 	@Autowired
+	private SuccessMessage successMessage;
+	
+	@Autowired
 	private PostReleaseService postReleaseService;
+	
+	@Autowired
+	private UserNodeService userNodeService;
 	
 	private PostVO postVO;
 
@@ -67,10 +77,10 @@ public class PostReleaseController {
 	 */
 	@RequestMapping(value = "/postrelease", method = RequestMethod.POST)
 	@ResponseBody
-	public PostRelease addPostRelease(@ModelAttribute PostRelease postRelease, @ModelAttribute("files") FileUpload fileUpload) throws IOException, NoSuchAlgorithmException {
-		System.out.println("user: " + postRelease.getUser());
-		System.out.println("phone: " + postRelease.getPhone());
+	public String addPostRelease(@ModelAttribute PostRelease postRelease, @ModelAttribute("files") FileUpload fileUpload) throws IOException, NoSuchAlgorithmException {
+		resultVO.setRequestTime(new Date(System.currentTimeMillis()).toString());
 		String saveDir = null;	// 存储的位置
+		String saveDirWithoutRoot = null; // 相对存储
 		String fileOriginalName = null;	// 原始文件名
 		String fileSuffix = null;	// 文件后缀
 		String fileHashName = null; // 哈希文件名
@@ -80,6 +90,7 @@ public class PostReleaseController {
 		String postImgUrls = "";
 		for (int i = 0; i < fileUpload.getFiles().length; i++) {
 			saveDir = Config.imgUrl + year + File.separator + month + File.separator + dayOfMonth + File.separator;
+			saveDirWithoutRoot = year + File.separator + month + File.separator + dayOfMonth + File.separator;
 			
 			fileOriginalName = fileUpload.getFiles()[i].getOriginalFilename();
 			String[] array = fileOriginalName.split("\\.");
@@ -87,12 +98,34 @@ public class PostReleaseController {
 			fileHashName = Encrypt.callMD5(fileOriginalName);
 			fileName = fileHashName + "." + fileSuffix;
 			
-			filePath = saveDir + fileName;
+			filePath = saveDirWithoutRoot + fileName;
 			FileIO.saveImg(fileUpload.getFiles()[0], saveDir, fileName);
 			String splitChar = i == fileUpload.getFiles().length - 1 ? "" : ",";
 			postImgUrls = filePath + splitChar;
 		}
-		return this.postReleaseService.addPostRelease(postRelease, postImgUrls);
+		
+		// 添加帖子基本信息到 mysql 
+		PostRelease postReleaseRet = this.postReleaseService.addPostRelease(postRelease, postImgUrls);
+		if (postReleaseRet == null) {
+			errorMessage.setErrorCode(ErrorEnum.DATABASEERROR.getCode());
+			errorMessage.setMessage(ErrorEnum.DATABASEERROR.getMessage());
+			resultVO.setResult(errorMessage);
+		} else {
+			// 添加转发图根结点
+			UserNode userRootNode = this.userNodeService.addRootUserNode(postRelease.getIdentifyId(), postRelease.getUser().getIdentifyId());
+			if (userRootNode == null) {
+				errorMessage.setErrorCode(ErrorEnum.DATABASEERROR.getCode());
+				errorMessage.setMessage(ErrorEnum.DATABASEERROR.getMessage());
+				resultVO.setResult(errorMessage);
+			} else {
+				successMessage.setCode(SuccessEnum.POSTADDSUCCESS.getCode());
+				successMessage.setMessage(SuccessEnum.POSTADDSUCCESS.getMessage());
+				resultVO.setResult(successMessage);
+			}
+		}
+		
+		resultVO.setResponseTime(new Date(System.currentTimeMillis()).toString());
+		return JSON.toJSONStringWithDateFormat(resultVO, "yyyy-MM-dd HH:mm:ss");
 	}
 	
 	/**
@@ -120,7 +153,8 @@ public class PostReleaseController {
 		
 		if (status == null || status.equals("")) {
 			if (startDate == null || endDate == null || startDate.equals("") || endDate.equals("")) {  // status 且 date 为空
-				errorMessage = new ErrorMessage(ErrorEnum.PARAMERROR.getCode(), ErrorEnum.PARAMERROR.getMessage());
+				errorMessage.setErrorCode(ErrorEnum.PARAMERROR.getCode());
+				errorMessage.setMessage(ErrorEnum.PARAMERROR.getMessage());
 				resultVO.setResult(errorMessage);
 			} else {	// status 为空 且 date 非空
 				// 获取指定日期的帖子
