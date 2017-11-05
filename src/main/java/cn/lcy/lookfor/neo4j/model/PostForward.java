@@ -17,6 +17,8 @@ public class PostForward {
 	@EndNode
 	private UserNode endUser;
 	
+	public PostForward() {}
+	
 	public PostForward(UserNode startUser, UserNode endUser) {
 		this.startUser = startUser;
 		this.endUser = endUser;
