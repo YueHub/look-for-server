@@ -1,7 +1,8 @@
 package cn.lcy.lookfor.model;
-// Generated 2017-11-2 15:44:17 by Hibernate Tools 5.0.6.Final
+// Generated 2017-11-6 22:30:05 by Hibernate Tools 5.0.6.Final
 
 import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;

@@ -1,5 +1,5 @@
 package cn.lcy.lookfor.model;
-// Generated 2017-11-2 15:44:17 by Hibernate Tools 5.0.6.Final
+// Generated 2017-11-6 22:30:05 by Hibernate Tools 5.0.6.Final
 
 import java.util.Date;
 import java.util.HashSet;
@@ -16,7 +16,6 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-import com.alibaba.fastjson.annotation.JSONField;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
@@ -28,7 +27,6 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 @JsonIdentityInfo(generator=ObjectIdGenerators.StringIdGenerator.class, property="@id")
 public class PostRelease implements java.io.Serializable {
 
-	@Id
 	private String identifyId;
 	private User user;
 	private Date releaseTime;

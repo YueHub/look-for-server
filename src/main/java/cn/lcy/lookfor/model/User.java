@@ -1,5 +1,5 @@
 package cn.lcy.lookfor.model;
-// Generated 2017-11-2 15:44:17 by Hibernate Tools 5.0.6.Final
+// Generated 2017-11-6 22:30:05 by Hibernate Tools 5.0.6.Final
 
 import java.util.Date;
 import java.util.HashSet;
@@ -14,9 +14,7 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-import com.alibaba.fastjson.annotation.JSONField;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 /**
@@ -27,9 +25,10 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 @JsonIdentityInfo(generator=ObjectIdGenerators.StringIdGenerator.class, property="@id")
 public class User implements java.io.Serializable {
 
-	@Id
 	private String identifyId;
 	private String selfIntroduction;
+	private String phone;
+	private String email;
 	private String popularityValue;
 	private String creditValue;
 	private Date creditTime;
@@ -39,20 +38,19 @@ public class User implements java.io.Serializable {
 
 	public User() {
 	}
-	
-	public User(String identifyId) {
-		this.identifyId = identifyId;
-	}
 
 	public User(String identifyId, Date creditTime) {
 		this.identifyId = identifyId;
 		this.creditTime = creditTime;
 	}
 
-	public User(String identifyId, String selfIntroduction, String popularityValue, String creditValue, Date creditTime,
-			Set<PostView> postViews, Set<PostUncover> postUncovers, Set<PostRelease> postReleases) {
+	public User(String identifyId, String selfIntroduction, String phone, String email, String popularityValue,
+			String creditValue, Date creditTime, Set<PostView> postViews, Set<PostUncover> postUncovers,
+			Set<PostRelease> postReleases) {
 		this.identifyId = identifyId;
 		this.selfIntroduction = selfIntroduction;
+		this.phone = phone;
+		this.email = email;
 		this.popularityValue = popularityValue;
 		this.creditValue = creditValue;
 		this.creditTime = creditTime;
@@ -79,6 +77,24 @@ public class User implements java.io.Serializable {
 
 	public void setSelfIntroduction(String selfIntroduction) {
 		this.selfIntroduction = selfIntroduction;
+	}
+
+	@Column(name = "phone", length = 20)
+	public String getPhone() {
+		return this.phone;
+	}
+
+	public void setPhone(String phone) {
+		this.phone = phone;
+	}
+
+	@Column(name = "email", length = 30)
+	public String getEmail() {
+		return this.email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
 	}
 
 	@Column(name = "popularity_value", length = 8)

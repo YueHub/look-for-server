@@ -25,6 +25,11 @@ public class PostReleaseService {
 		postRelease.setIdentifyId(uuid);
 		postRelease.setReleaseTime(new Date(System.currentTimeMillis()));
 		postRelease.setPostImgUrls(postImgUrls);
+		postRelease.setViewCount(1l);
+		postRelease.setUncoverCount(0l);
+		postRelease.setSuccessCount(0l);
+		postRelease.setPaidReward("0");
+		postRelease.setStatus(1);
 		return this.postReleaseRepository.save(postRelease);
 	}
 	
