@@ -196,11 +196,18 @@ public class PostReleaseController {
 	 */
 	@RequestMapping(value = "/postrelease/{identifyId}", method = RequestMethod.GET)
 	@ResponseBody
-	public PostRelease getPostReleaseById(@PathVariable("identifyId") String identifyId) {
+	public String getPostReleaseById(@PathVariable("identifyId") String identifyId) {
+		resultVO.setRequestTime(new Date(System.currentTimeMillis()).toString());
 		if (identifyId == null || identifyId.equals("")) {
-			return null;
+			errorMessage.setErrorCode(ErrorEnum.PARAMERROR.getCode());
+			errorMessage.setMessage(ErrorEnum.PARAMERROR.getMessage());
+			resultVO.setResult(errorMessage);
+		} else {
+			resultVO.setResult(this.postReleaseService.getPostReleaseById(identifyId));
 		}
-		return this.postReleaseService.getPostReleaseById(identifyId);
+		
+		resultVO.setResponseTime(new Date(System.currentTimeMillis()).toString());
+		return JSON.toJSONStringWithDateFormat(resultVO, "yyyy-MM-dd HH:mm:ss");
 	}
 	
 }
