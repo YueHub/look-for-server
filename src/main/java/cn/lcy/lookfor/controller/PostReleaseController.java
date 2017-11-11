@@ -120,6 +120,7 @@ public class PostReleaseController {
 			} else {
 				successMessage.setCode(SuccessEnum.POSTADDSUCCESS.getCode());
 				successMessage.setMessage(SuccessEnum.POSTADDSUCCESS.getMessage());
+				successMessage.setData(postReleaseRet);
 				resultVO.setResult(successMessage);
 			}
 		}

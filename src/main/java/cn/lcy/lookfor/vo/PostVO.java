@@ -56,9 +56,9 @@ public class PostVO {
 	private String email;
 	
 	/**
-	 * 自我介绍
+	 * 额外信息
 	 */
-	private String selfIntroduce;
+	private String extraInfo;
 	
 	/**
 	 * 帖子图片
@@ -100,7 +100,7 @@ public class PostVO {
 		this.reward = postRelease.getReward();
 		this.phone = postRelease.getPhone();
 		this.email = postRelease.getEmail();
-		this.selfIntroduce = postRelease.getSelfIntroduce();
+		this.extraInfo = postRelease.getExtraInfo();
 		this.postImgUrls = postRelease.getPostImgUrls();
 		this.viewCount = postRelease.getViewCount();
 		this.uncoverCount = postRelease.getUncoverCount();
@@ -181,12 +181,12 @@ public class PostVO {
 		this.email = email;
 	}
 
-	public String getSelfIntroduce() {
-		return selfIntroduce;
+	public String getExtraInfo() {
+		return extraInfo;
 	}
 
-	public void setSelfIntroduce(String selfIntroduce) {
-		this.selfIntroduce = selfIntroduce;
+	public void setExtraInfo(String extraInfo) {
+		this.extraInfo = extraInfo;
 	}
 
 	public String getPostImgUrls() {
