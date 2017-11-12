@@ -66,6 +66,7 @@ public class UserController {
 			errorMessage.setMessage(ErrorEnum.DATABASEERROR.getMessage());
 			resultVO.setResult(errorMessage);
 		} else {
+			newUser.setPhone(user.getPhone());
 			newUser.setEmail(user.getEmail());
 			newUser.setSelfIntroduction(user.getSelfIntroduction());
 			User resultUser = this.userService.updateUser(newUser);
