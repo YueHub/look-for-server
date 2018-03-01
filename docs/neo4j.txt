@@ -1,0 +1,4 @@
+CREATE (:UserNode {postIdentifyId:'60e36343c17943e6af9c15243fc5972a', userIdentifyId:'1'})
+CREATE (:UserNode {postIdentifyId:'60e36343c17943e6af9c15243fc5972b', userIdentifyId:'1'})
+CREATE (:UserNode {postIdentifyId:'60e36343c17943e6af9c15243fc5972c', userIdentifyId:'2'})
+CREATE (:UserNode {postIdentifyId:'60e36343c17943e6af9c15243fc5972d', userIdentifyId:'1'})
