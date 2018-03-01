@@ -1,7 +1,9 @@
 package cn.lcy.lookfor.service;
 
 
+import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,6 +21,9 @@ public class PostUncoverService {
 	
 	@Transactional
 	public PostUncover addPostUncover(PostUncover postUncover) {
+		String uuid = UUID.randomUUID().toString().replace("-", "");
+		postUncover.setIdentifyId(uuid);
+		postUncover.setUncoverTime(new Date(System.currentTimeMillis()));
 		return this.postUncoverRepository.save(postUncover);
 	}
 

@@ -6,3 +6,7 @@
 /docs
 src/main/resources
 bak
+
+/.idea/workspace.xml
+/.idea/libraries
+look-for-server.iml
