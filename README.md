@@ -16,14 +16,6 @@
 
 ![image](./screenShots/主页.png)
 
-* 招聘信息发布
-
-![image](./screenShots/招聘信息发布页面.png)
-
-* 我的
-
-![image](./screenShots/我的.png)
-
 look-for-web-client 源码: [look-for-web-client](https://github.com/YueHub/look-for-web-client)
 
 ### License
