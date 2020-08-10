@@ -18,5 +18,5 @@
 
 look-for-web-client 源码: [look-for-web-client](https://github.com/YueHub/look-for-web-client)
 
-### License
+## License
 [MIT License](https://github.com/YueHub/look-for-server/blob/master/LICENSE.md)

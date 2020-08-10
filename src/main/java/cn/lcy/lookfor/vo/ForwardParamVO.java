@@ -1,35 +1,35 @@
 package cn.lcy.lookfor.vo;
 
 public class ForwardParamVO {
-	
-	private String postId;
-	
-	private String startUserId;
-	
-	private String endUserId;
 
-	public String getPostId() {
-		return postId;
-	}
+    private String postId;
 
-	public void setPostId(String postId) {
-		this.postId = postId;
-	}
+    private String startUserId;
 
-	public String getStartUserId() {
-		return startUserId;
-	}
+    private String endUserId;
 
-	public void setStartUserId(String startUserId) {
-		this.startUserId = startUserId;
-	}
+    public String getPostId() {
+        return postId;
+    }
 
-	public String getEndUserId() {
-		return endUserId;
-	}
+    public void setPostId(String postId) {
+        this.postId = postId;
+    }
 
-	public void setEndUserId(String endUserId) {
-		this.endUserId = endUserId;
-	}
+    public String getStartUserId() {
+        return startUserId;
+    }
+
+    public void setStartUserId(String startUserId) {
+        this.startUserId = startUserId;
+    }
+
+    public String getEndUserId() {
+        return endUserId;
+    }
+
+    public void setEndUserId(String endUserId) {
+        this.endUserId = endUserId;
+    }
 
 }
